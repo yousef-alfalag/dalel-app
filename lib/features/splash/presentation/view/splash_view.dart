@@ -1,3 +1,4 @@
+import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:flutter/material.dart';
 
 class SplashView extends StatelessWidget {
@@ -6,7 +7,7 @@ class SplashView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text("dalel"),),
+      body: Center(child: Text(AppStrings.appName),),
     );
   }
 }
