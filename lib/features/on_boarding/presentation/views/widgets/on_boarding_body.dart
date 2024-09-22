@@ -5,13 +5,15 @@ import 'package:dalel_app/features/on_boarding/presentation/views/widgets/custom
 import 'package:flutter/material.dart';
 
 class OnBoardingBody extends StatelessWidget {
-  const OnBoardingBody({super.key});
+  const OnBoardingBody({super.key, required this.controller, this.onPageChanged});
+  final PageController controller;
+  final Function(int)? onPageChanged;
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController();
     return SizedBox(
       height: 390,
       child: PageView.builder(
+        onPageChanged: onPageChanged,
         itemCount: onBoardingData.length,
         physics: const BouncingScrollPhysics(),
         controller: controller,
