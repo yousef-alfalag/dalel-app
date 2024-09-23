@@ -1,4 +1,3 @@
-import 'package:dalel_app/core/utils/app_assets.dart';
 import 'package:dalel_app/core/utils/app_text_styles.dart';
 import 'package:dalel_app/features/on_boarding/data/on_boarding_data_list.dart';
 import 'package:dalel_app/features/on_boarding/presentation/views/widgets/custom_smooth_page_indicator.dart';

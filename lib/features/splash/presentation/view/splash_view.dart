@@ -1,4 +1,5 @@
 import 'package:dalel_app/core/constants/route_constant.dart';
+import 'package:dalel_app/core/database/locale/cache/cache_helper.dart';
 import 'package:dalel_app/core/functions/custom_navigate.dart';
 import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:dalel_app/core/utils/app_text_styles.dart';
@@ -14,7 +15,13 @@ class SplashView extends StatefulWidget {
 class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
-    delayedNavigate(context);
+    bool isOnBoardingVisited =
+        CacheHelper().getData(key: "isOnboardingVisited") ?? false;
+    if (isOnBoardingVisited) {
+      delayedNavigate(context, AppRoute.signUpView);
+    } else {
+      delayedNavigate(context, AppRoute.onBoardingView);
+    }
     super.initState();
   }
 
@@ -30,8 +37,8 @@ class _SplashViewState extends State<SplashView> {
   }
 }
 
-void delayedNavigate(context) {
+void delayedNavigate(context, path) {
   Future.delayed(const Duration(seconds: 2), () {
-    customPushReplacementNavigate(context, AppRoute.onBoardingView);
+    customPushReplacementNavigate(context, path);
   });
 }
