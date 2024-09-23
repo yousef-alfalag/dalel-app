@@ -1,6 +1,7 @@
 import 'package:dalel_app/core/constants/route_constant.dart';
 import 'package:dalel_app/core/database/locale/cache/cache_helper.dart';
 import 'package:dalel_app/core/functions/custom_navigate.dart';
+import 'package:dalel_app/core/services/service_locator.dart';
 import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:dalel_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     bool isOnBoardingVisited =
-        CacheHelper().getData(key: "isOnboardingVisited") ?? false;
+        getIt<CacheHelper>().getData(key: "isOnboardingVisited") ?? false;
     if (isOnBoardingVisited) {
       delayedNavigate(context, AppRoute.signUpView);
     } else {

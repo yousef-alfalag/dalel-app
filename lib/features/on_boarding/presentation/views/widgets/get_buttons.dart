@@ -1,6 +1,6 @@
 import 'package:dalel_app/core/constants/route_constant.dart';
-import 'package:dalel_app/core/database/locale/cache/cache_helper.dart';
 import 'package:dalel_app/core/functions/custom_navigate.dart';
+import 'package:dalel_app/features/on_boarding/presentation/views/functions/on_boarding.dart';
 import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:dalel_app/core/widgets/custom_btn.dart';
 import 'package:dalel_app/features/on_boarding/data/on_boarding_data_list.dart';
@@ -19,13 +19,13 @@ class GetButtons extends StatelessWidget {
           CustomBtn(
             text: AppStrings.createAccount,
             onPressed: () {
-              CacheHelper().saveData(key: "isOnboardingVisited", data: true);
+              onBoardingVisited();
               customPushReplacementNavigate(context, AppRoute.signUpView);
             },
           ),
           GestureDetector(
               onTap: () {
-                 CacheHelper().saveData(key: "isOnboardingVisited",data: true);
+                 onBoardingVisited();
                 customPushReplacementNavigate(context, AppRoute.signInView);
               },
               child: Text(AppStrings.loginNow))

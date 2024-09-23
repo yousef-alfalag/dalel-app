@@ -1,6 +1,6 @@
 import 'package:dalel_app/core/constants/route_constant.dart';
-import 'package:dalel_app/core/database/locale/cache/cache_helper.dart';
 import 'package:dalel_app/core/functions/custom_navigate.dart';
+import 'package:dalel_app/features/on_boarding/presentation/views/functions/on_boarding.dart';
 import 'package:dalel_app/features/on_boarding/presentation/views/widgets/custom_nav_bar.dart';
 import 'package:dalel_app/features/on_boarding/presentation/views/widgets/get_buttons.dart';
 import 'package:dalel_app/features/on_boarding/presentation/views/widgets/on_boarding_body.dart';
@@ -29,7 +29,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               ),
               CustomNavBar(
                 onTap: () {
-                  CacheHelper().saveData(key: "isOnboardingVisited",data: true);
+                  onBoardingVisited();
                   customPushReplacementNavigate(context, AppRoute.signUpView);
                 },
               ),
