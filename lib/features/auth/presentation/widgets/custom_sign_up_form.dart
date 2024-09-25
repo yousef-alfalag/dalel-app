@@ -1,8 +1,9 @@
+import 'package:dalel_app/core/utils/app_colors.dart';
 import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:dalel_app/core/widgets/custom_btn.dart';
 import 'package:dalel_app/features/auth/auth_cubit/cubit/auth_cubit.dart';
 import 'package:dalel_app/features/auth/auth_cubit/cubit/auth_state.dart';
-import 'package:dalel_app/features/auth/presentation/widgets/custom_text_field.dart';
+import 'package:dalel_app/features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:dalel_app/features/auth/presentation/widgets/terms_and_condition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -13,35 +14,38 @@ class CustomSignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
+        AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
         return Form(
+          key: authCubit.signUpFormKay,
           child: Column(
             children: [
-               CustomTextFormField(
+              CustomTextFormField(
                 onChanged: (firstName) {
-                  BlocProvider.of<AuthCubit>(context).firstName=firstName;
+                  authCubit.firstName = firstName;
                 },
                 labelText: AppStrings.firstName,
               ),
-               CustomTextFormField(
-                onChanged:(lastName){
-                   BlocProvider.of<AuthCubit>(context).lastName=lastName;
-                } ,
+              CustomTextFormField(
+                onChanged: (lastName) {
+                  authCubit.lastName = lastName;
+                },
                 labelText: AppStrings.lastName,
               ),
-               CustomTextFormField(
-                 onChanged:(emailAddress){
-                   BlocProvider.of<AuthCubit>(context).emailAddress=emailAddress;
-                 } ,
+              CustomTextFormField(
+                onChanged: (emailAddress) {
+                  authCubit.emailAddress = emailAddress;
+                },
                 labelText: AppStrings.emailAddress,
               ),
-               CustomTextFormField(
-                 onChanged:(password){
-                   BlocProvider.of<AuthCubit>(context).password=password;
-                 } ,
+              CustomTextFormField(
+                obscureText: authCubit.showOrHideTextValue,
+                icon: authCubit.icon,
+                iconButtonOnPressed: authCubit.showOrHideText,
+                onChanged: (password) {
+                  authCubit.password = password;
+                },
                 labelText: AppStrings.password,
               ),
               const TermsAndConditionWidget(),
@@ -49,9 +53,14 @@ class CustomSignUpForm extends StatelessWidget {
                 height: 88,
               ),
               CustomBtn(
+                color: authCubit.termsAndConditionCheckBoxValue==false?AppColors.gray:null,
                 text: AppStrings.signUp,
                 onPressed: () {
-                  BlocProvider.of<AuthCubit>(context).createUserWithEmailAndPassword();
+                  if (authCubit.termsAndConditionCheckBoxValue) {
+                    if (authCubit.signUpFormKay.currentState!.validate()) {
+                      authCubit.createUserWithEmailAndPassword();
+                    }
+                  }
                 },
               ),
             ],

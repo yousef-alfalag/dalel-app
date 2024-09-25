@@ -1,13 +1,18 @@
 import 'package:dalel_app/features/auth/auth_cubit/cubit/auth_state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
-  late String? firstName;
-  late String? lastName;
-  late String? emailAddress;
-  late String? password;
+   String? firstName;
+   String? lastName;
+   String? emailAddress;
+   String? password;
+   GlobalKey<FormState> signUpFormKay=GlobalKey();
+   bool termsAndConditionCheckBoxValue=false;
+   bool showOrHideTextValue=true;
+   IconData icon=Icons.remove_red_eye_outlined;
   createUserWithEmailAndPassword() async {
     try {
       emit(SignUpLoadingState());
@@ -27,4 +32,19 @@ class AuthCubit extends Cubit<AuthState> {
       emit(SignUpFailureState(errorMessage: e.toString()));
     }
   }
+  updateTermsAndConditionCheckBox({required newValue}){
+  termsAndConditionCheckBoxValue=newValue;
+  emit(TermsAndConditionUpdateState());
 }
+  showOrHideText(){
+  showOrHideTextValue=!showOrHideTextValue;
+  if (showOrHideTextValue) {
+    icon=Icons.remove_red_eye_outlined;
+  }else{
+    icon=Icons.remove_red_eye;
+  }
+  emit(ShowOrHideTextUpdateState());
+}
+}
+
+
