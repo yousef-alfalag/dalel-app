@@ -3,10 +3,10 @@ import 'package:dalel_app/core/utils/app_text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CustomBtn extends StatelessWidget {
-  const CustomBtn({super.key, this.color, required this.text, this.onPressed, });
+  const CustomBtn({super.key, this.color, required this.text, required this.onPressed, });
   final Color? color;
   final String text;
-  final  VoidCallback? onPressed;
+  final  VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
