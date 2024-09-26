@@ -1,3 +1,6 @@
+import 'package:dalel_app/core/constants/route_constant.dart';
+import 'package:dalel_app/core/functions/custom_navigate.dart';
+import 'package:dalel_app/core/functions/custom_toast.dart';
 import 'package:dalel_app/core/utils/app_colors.dart';
 import 'package:dalel_app/core/utils/app_strings.dart';
 import 'package:dalel_app/core/widgets/custom_btn.dart';
@@ -7,6 +10,7 @@ import 'package:dalel_app/features/auth/presentation/widgets/custom_text_form_fi
 import 'package:dalel_app/features/auth/presentation/widgets/terms_and_condition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomSignUpForm extends StatelessWidget {
   const CustomSignUpForm({super.key});
@@ -14,7 +18,14 @@ class CustomSignUpForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AuthCubit, AuthState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is SignUpSuccessState) {
+          showToast("Account created successfully");
+          customPushReplacementNavigate(context, AppRoute.signInView);
+        } else if(state is SignUpFailureState){
+           showToast(state.errorMessage);
+        }
+      },
       builder: (context, state) {
         AuthCubit authCubit = BlocProvider.of<AuthCubit>(context);
         return Form(
@@ -52,17 +63,24 @@ class CustomSignUpForm extends StatelessWidget {
               const SizedBox(
                 height: 88,
               ),
-              CustomBtn(
-                color: authCubit.termsAndConditionCheckBoxValue==false?AppColors.gray:null,
-                text: AppStrings.signUp,
-                onPressed: () {
-                  if (authCubit.termsAndConditionCheckBoxValue) {
-                    if (authCubit.signUpFormKay.currentState!.validate()) {
-                      authCubit.createUserWithEmailAndPassword();
-                    }
-                  }
-                },
-              ),
+              state is SignUpLoadingState
+                  ? const CircularProgressIndicator(
+                      color: AppColors.primaryColor,
+                    )
+                  : CustomBtn(
+                      color: authCubit.termsAndConditionCheckBoxValue == false
+                          ? AppColors.gray
+                          : null,
+                      text: AppStrings.signUp,
+                      onPressed: () {
+                        if (authCubit.termsAndConditionCheckBoxValue) {
+                          if (authCubit.signUpFormKay.currentState!
+                              .validate()) {
+                            authCubit.createUserWithEmailAndPassword();
+                          }
+                        }
+                      },
+                    ),
             ],
           ),
         );

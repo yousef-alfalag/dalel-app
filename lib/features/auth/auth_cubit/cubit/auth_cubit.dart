@@ -46,5 +46,3 @@ class AuthCubit extends Cubit<AuthState> {
   emit(ShowOrHideTextUpdateState());
 }
 }
-
-
