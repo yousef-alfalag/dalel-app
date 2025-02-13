@@ -28,7 +28,7 @@ class GetButtons extends StatelessWidget {
                  onBoardingVisited();
                 customPushReplacementNavigate(context, AppRoute.signInView);
               },
-              child: Text(AppStrings.loginNow))
+              child:const Text(AppStrings.loginNow))
         ],
       );
     } else {
@@ -36,7 +36,7 @@ class GetButtons extends StatelessWidget {
         text: AppStrings.next,
         onPressed: () {
           controller.nextPage(
-              duration: Duration(microseconds: 200), curve: Curves.bounceIn);
+              duration:const Duration(microseconds: 200), curve: Curves.bounceIn);
         },
       );
     }

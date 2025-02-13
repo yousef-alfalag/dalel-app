@@ -5,14 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
-   String? firstName;
-   String? lastName;
-   String? emailAddress;
-   String? password;
-   GlobalKey<FormState> signUpFormKay=GlobalKey();
-   bool termsAndConditionCheckBoxValue=false;
-   bool showOrHideTextValue=true;
-   IconData icon=Icons.remove_red_eye_outlined;
+  String? firstName;
+  String? lastName;
+  String? emailAddress;
+  String? password;
+  GlobalKey<FormState> signUpFormKay = GlobalKey();
+  GlobalKey<FormState> signInFormKay = GlobalKey();
+  bool termsAndConditionCheckBoxValue = false;
+  bool showOrHideTextValue = true;
+  IconData icon = Icons.remove_red_eye_outlined;
   createUserWithEmailAndPassword() async {
     try {
       emit(SignUpLoadingState());
@@ -24,25 +25,47 @@ class AuthCubit extends Cubit<AuthState> {
       emit(SignUpSuccessState());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        emit(SignUpFailureState(errorMessage: 'The password provided is too weak.')); 
+        emit(SignUpFailureState(
+            errorMessage: 'The password provided is too weak.'));
       } else if (e.code == 'email-already-in-use') {
-        emit(SignUpFailureState(errorMessage: 'The account already exists for that email.'));
+        emit(SignUpFailureState(
+            errorMessage: 'The account already exists for that email.'));
       }
     } catch (e) {
       emit(SignUpFailureState(errorMessage: e.toString()));
     }
   }
-  updateTermsAndConditionCheckBox({required newValue}){
-  termsAndConditionCheckBoxValue=newValue;
-  emit(TermsAndConditionUpdateState());
-}
-  showOrHideText(){
-  showOrHideTextValue=!showOrHideTextValue;
-  if (showOrHideTextValue) {
-    icon=Icons.remove_red_eye_outlined;
-  }else{
-    icon=Icons.remove_red_eye;
+
+  updateTermsAndConditionCheckBox({required newValue}) {
+    termsAndConditionCheckBoxValue = newValue;
+    emit(TermsAndConditionUpdateState());
   }
-  emit(ShowOrHideTextUpdateState());
+
+  showOrHideText() {
+    showOrHideTextValue = !showOrHideTextValue;
+    if (showOrHideTextValue) {
+      icon = Icons.remove_red_eye_outlined;
+    } else {
+      icon = Icons.remove_red_eye;
+    }
+    emit(ShowOrHideTextUpdateState());
+  }
+
+  signInWithEmailAndPassword() async{
+    try {
+      emit(SignInLoadingState());
+      await FirebaseAuth.instance
+      .signInWithEmailAndPassword(email: emailAddress!, password: password!);
+      emit(SignInSuccessState());
+} on FirebaseAuthException catch (e) {
+  if (e.code == 'user-not-found') {
+    emit(SignInFailureState(errorMessage: 'No user found for that email.'));
+  } else if (e.code == 'wrong-password') {
+    emit(SignInFailureState(errorMessage:'Wrong password provided for that user.' ));
+  }
+} catch (e) {
+  emit(SignInFailureState(errorMessage: e.toString()));
+  
 }
+  }
 }
