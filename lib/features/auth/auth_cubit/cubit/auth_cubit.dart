@@ -31,6 +31,7 @@ class AuthCubit extends Cubit<AuthState> {
         emit(SignUpFailureState(
             errorMessage: 'The account already exists for that email.'));
       }
+      
     } catch (e) {
       emit(SignUpFailureState(errorMessage: e.toString()));
     }
@@ -62,7 +63,8 @@ class AuthCubit extends Cubit<AuthState> {
     emit(SignInFailureState(errorMessage: 'No user found for that email.'));
   } else if (e.code == 'wrong-password') {
     emit(SignInFailureState(errorMessage:'Wrong password provided for that user.' ));
-  }
+  }else {
+        emit(SignInFailureState(errorMessage: 'ensure email and password'));}
 } catch (e) {
   emit(SignInFailureState(errorMessage: e.toString()));
   
