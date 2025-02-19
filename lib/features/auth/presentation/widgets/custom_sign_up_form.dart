@@ -10,7 +10,6 @@ import 'package:dalel_app/features/auth/presentation/widgets/custom_text_form_fi
 import 'package:dalel_app/features/auth/presentation/widgets/terms_and_condition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class CustomSignUpForm extends StatelessWidget {
   const CustomSignUpForm({super.key});
@@ -21,7 +20,7 @@ class CustomSignUpForm extends StatelessWidget {
       listener: (context, state) {
         if (state is SignUpSuccessState) {
           showToast("Account created successfully");
-          customPushReplacementNavigate(context, AppRoute.homeView);
+          customPushReplacementNavigate(context, AppRoute.signInView);
         } else if(state is SignUpFailureState){
            showToast(state.errorMessage);
         }

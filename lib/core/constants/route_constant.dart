@@ -3,5 +3,6 @@ abstract class AppRoute {
       onBoardingView = "/onBoardingView",
       signInView = "/SignInView",
       signUpView = "/SignUpView",
-      homeView = "/homeView";
+      homeView = "/homeView",
+      verifyView="/verifyView";
 }
