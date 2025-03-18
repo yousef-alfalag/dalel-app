@@ -59,6 +59,7 @@ abstract class AppStrings {
           "Thank you for your order here and your package will be sent to your address very quickly and fast good product",
       backToHome = "Back To Home",
       //!Forgot password
+      forgotPasswordSubtitle='Enter your email registered email below to receive password reset instruction',
       forgotPasswordPage = "Forgot Password",
       sendResetPasswordLink = "Send Reset Password Link",
       verificationNow = "Verification Now",

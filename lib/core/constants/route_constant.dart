@@ -4,5 +4,5 @@ abstract class AppRoute {
       signInView = "/SignInView",
       signUpView = "/SignUpView",
       homeView = "/homeView",
-      verifyView="/verifyView";
+      forgetPasswordView='/forgetPasswordView';
 }
